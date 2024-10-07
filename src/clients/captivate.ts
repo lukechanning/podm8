@@ -30,7 +30,15 @@ class CaptivateClient {
         this.token = data.user.token;
     }
 
-
+    public async getShows(): Promise<[]> {
+        const response = await fetch(`${this.apiUrl}/users/${this.userId}/shows`, {
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+            },
+        });
+        const data = await response.json();
+        return data.shows;
+    }
 }
 
 export default CaptivateClient;
