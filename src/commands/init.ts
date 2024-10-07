@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { Args, Command } from '@oclif/core'
 import { input, select } from '@inquirer/prompts'
 import { NETWORKS } from '../constants.js'
@@ -30,6 +31,22 @@ export default class Init extends Command {
       message: 'Enter your network API key',
     })
 
-    console.log(network, userId, apiKey)
+    const JSON_CONFIG = [
+      {
+        network,
+        userId,
+        apiKey,
+      }
+    ]
+
+    try {
+      // write a .podm8rc file with the network, userId, and apiKey values
+      // to the user's home directory (e.g. ~/.podm8rc)
+      fs.writeFileSync(`${process.env.HOME}/.podm8rc`, JSON.stringify(JSON_CONFIG, null, 2))
+
+      console.log('> Configuration saved successfully!')
+    } catch (error) {
+      console.error('Error saving configuration:', error)
+    }
   }
 }
