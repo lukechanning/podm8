@@ -1,12 +1,10 @@
 import fs from 'fs'
-import { Args, Command } from '@oclif/core'
+import { Command } from '@oclif/core'
 import { input, select } from '@inquirer/prompts'
 import { NETWORKS } from '../constants.js'
 
 export default class Init extends Command {
-  static override args = {
-    file: Args.string({ description: 'file to read' }),
-  }
+  static override args = {}
 
   static override description = 'setup podm8 with your network and project details'
 
