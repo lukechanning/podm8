@@ -1,6 +1,15 @@
 import fs from 'fs';
 import { NETWORKS } from '../constants.js';
 
+interface DownloadsData {
+    past_12_months: [
+        {
+            x: string,
+            y: number,
+        }
+    ]
+}
+
 class CaptivateClient {
     private apiUrl: string = 'https://api.captivate.fm';
     private userId: string;
@@ -38,6 +47,16 @@ class CaptivateClient {
         });
         const data = await response.json();
         return data.shows;
+    }
+
+    public async getMonthlyDownloads(showId: string): Promise<DownloadsData> {
+        const response = await fetch(`${this.apiUrl}/insights/${showId}/monthly`, {
+            headers: {
+                Authorization: `Bearer ${this.token}`,
+            },
+        });
+        const data = await response.json();
+        return data;
     }
 }
 
