@@ -8,10 +8,10 @@
   },
   "bugs": "https://github.com/https://github.com/lukechanning/podm8/podm8/issues",
   "dependencies": {
+    "@inquirer/prompts": "^7.0.0",
     "@oclif/core": "^4",
     "@oclif/plugin-help": "^6",
-    "@oclif/plugin-plugins": "^5",
-    "inquirer": "^12.0.0"
+    "@oclif/plugin-plugins": "^5"
   },
   "devDependencies": {
     "@oclif/prettier-config": "^0.2.1",
