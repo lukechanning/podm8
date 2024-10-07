@@ -1,4 +1,5 @@
 import { Command } from '@oclif/core'
+import cliProgress from 'cli-progress';
 import CaptivateClient from '../../clients/captivate.js'
 
 export default class Shows extends Command {
@@ -14,11 +15,21 @@ export default class Shows extends Command {
   }
 
   public async run(): Promise<void> {
+    // create a new progress bar
+    const progressBar = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic)
+    progressBar.start(100, 0)
+
     // create a new CaptivateClient instance
     const client = new CaptivateClient()
+    progressBar.update(25)
+
+    // authenticate with Captivate
     await client.authenticate()
+    progressBar.update(75)
+
     // get all shows from Captivate
     const shows = await client.getShows()
+    progressBar.update(100)
 
     // create a table with each shows name and description
     const table = shows.map((show: any) => {
@@ -28,6 +39,7 @@ export default class Shows extends Command {
         episodes: show.episode_count,
       }
     })
+    progressBar.stop()
 
     console.table(table)
   }
