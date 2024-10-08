@@ -1,10 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable unicorn/no-array-reduce */
-import fs from 'node:fs'
-
 import {MonthlyDownloadsTableEntry} from '../commands/downloads.js'
 import {ShowsData} from '../commands/shows.js'
-import {NETWORKS} from '../constants.js'
 
 interface DownloadsData {
   past_12_months: [
@@ -21,12 +18,7 @@ class CaptivateClient {
   private token: string = ''
   private userId: string
 
-  constructor() {
-    const config = JSON.parse(fs.readFileSync(`${process.env.HOME}/.podm8rc`).toString())
-    const captivateConfig = config.find(
-      (c: {apiKey: string; network: string; userId: string}) => c.network === NETWORKS.Captivate,
-    )
-    const {apiKey, userId} = captivateConfig
+  constructor(apiKey: string, userId: string) {
     this.userId = userId
     this.apiKey = apiKey
   }

@@ -1,7 +1,8 @@
-import fs from 'fs'
-import { Command } from '@oclif/core'
-import { input, select } from '@inquirer/prompts'
-import { NETWORKS } from '../constants.js'
+import {input, select} from '@inquirer/prompts'
+import {Command} from '@oclif/core'
+import fs from 'node:fs'
+
+import {NETWORKS} from '../constants.js'
 
 export default class Init extends Command {
   static override args = {}
@@ -15,10 +16,8 @@ export default class Init extends Command {
   public async run(): Promise<void> {
     // determine what network to configure
     const network = await select({
+      choices: [{name: 'Captivate.fm', value: NETWORKS.Captivate}],
       message: 'Select the network to configure',
-      choices: [
-        { name: 'Captivate.fm', value: NETWORKS.Captivate },
-      ],
     })
     // gather network API user id
     const userId = await input({
@@ -29,13 +28,15 @@ export default class Init extends Command {
       message: 'Enter your network API key',
     })
 
-    const JSON_CONFIG = [
-      {
-        network,
-        userId,
-        apiKey,
-      }
-    ]
+    const JSON_CONFIG = {
+      configurations: {
+        [network]: {
+          apiKey,
+          userId,
+        },
+      },
+      defaultNetwork: network,
+    }
 
     try {
       // write a .podm8rc file with the network, userId, and apiKey values
