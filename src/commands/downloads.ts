@@ -53,8 +53,12 @@ export default class Downloads extends Command {
     // add a total row to the table
     const total = downloads.reduce((acc, val) => acc + val.downloads, 0)
 
+    // add an average per month row to the table
+    const average = Math.round(total / downloads.length)
+
     // print the table & results
     console.table(downloads)
     console.log('Total downloads for period:', total)
+    console.log('Average downloads per month:', average)
   }
 }
