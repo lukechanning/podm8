@@ -64,10 +64,17 @@ class CaptivateClient {
     )
 
     // format the data as a table
-    const table = Object.keys(reducedDownloads).map((key) => ({
+    const table = Object.keys(reducedDownloads).map((key, i) => ({
       month: key,
       // eslint-disable-next-line perfectionist/sort-objects
       downloads: reducedDownloads[key],
+      // produce a percent change from the previous month
+      percentChange: Math.round(
+        (i === 0
+          ? 0
+          : (reducedDownloads[key] - reducedDownloads[Object.keys(reducedDownloads)[i - 1]]) /
+            reducedDownloads[Object.keys(reducedDownloads)[i - 1]]) * 100,
+      ),
     })) as MonthlyDownloadsTableEntry[]
 
     // return the table

@@ -6,6 +6,7 @@ import {getClient} from '../clients/switch.js'
 export interface MonthlyDownloadsTableEntry {
   downloads: number
   month: string
+  percentChange: number
 }
 
 export default class Downloads extends Command {
