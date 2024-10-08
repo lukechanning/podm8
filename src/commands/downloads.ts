@@ -49,7 +49,11 @@ export default class Downloads extends Command {
     // get the monthly downloads for the selected shows
     const downloads = await client.getMonthlyDownloads(shows)
 
-    // print the table
+    // add a total row to the table
+    const total = downloads.reduce((acc, val) => acc + val.downloads, 0)
+
+    // print the table & results
     console.table(downloads)
+    console.log('Total downloads for period:', total)
   }
 }
